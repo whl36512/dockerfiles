@@ -1,0 +1,25 @@
+FROM local/centos7-systemd
+MAINTAINER "Weihan Lin" <whl36512@gmail.com>
+ENV container docker
+
+# remove vi-minimal and install vim enhanced
+RUN yum remove -y vi; yum install -y vim; ln -s /usr/bin/vim /usr/bin/vi
+# upgrade vim to vim8
+RUN curl -L https://copr.fedorainfracloud.org/coprs/mcepl/vim8/repo/epel-7/mcepl-vim8-epel-7.repo -o /etc/yum.repos.d/mcepl-vim8-epel-7.repo
+RUN yum update -y vim*
+# install git
+RUN yum install -y  git
+RUN yum install -y  gcc
+
+
+#RUN curl https://sh.rustup.rs -sSf | sh
+RUN git clone --depth=1 https://github.com/rust-lang/rust.vim.git /root/.vim/pack/plugins/start/vim-rust
+
+#docker build -f centos7.docker --rm -t local/centos7-systemd .
+#docker build -f golang.docker --rm -t local/golang .
+#docker network create --driver bridge --subnet 10.0.0.0/16 nw1 
+#docker run --privileged --name centos7  --network=nw1 ip=10.0.0.2 -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro local/centos7-systemd  # --privileged is requred by sshd and postgresql
+#docker stop   centos7
+#docker rm   centos7
+#docker rmi local/centos7-systemd
+
