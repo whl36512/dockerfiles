@@ -14,6 +14,7 @@ RUN yum install -y  gcc
 
 #RUN curl https://sh.rustup.rs -sSf | sh
 RUN git clone --depth=1 https://github.com/rust-lang/rust.vim.git /root/.vim/pack/plugins/start/vim-rust
+RUN echo 'export PATH="$HOME/.cargo/bin:$PATH"'  >> /root/.bash_profile
 
 #docker build -f centos7.docker --rm -t local/centos7-systemd .
 #docker build -f golang.docker --rm -t local/golang .
