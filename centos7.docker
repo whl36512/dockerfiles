@@ -25,7 +25,7 @@ CMD ["/usr/sbin/init"]
 
 #docker build -f centos7.docker --rm -t local/centos7-systemd .
 #docker network create --driver bridge --subnet 10.0.0.0/16 nw1 
-#docker run --privileged --name centos7  --network=nw1 ip=10.0.0.2 -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro local/centos7-systemd  # --privileged is requred by sshd and postgresql
+#docker run --privileged --name centos7  --network=nw1 --ip=10.0.0.2 -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro local/centos7-systemd  # --privileged is requred by sshd and postgresql
 #docker stop   centos7
 #docker rm   centos7
 #docker rmi local/centos7-systemd
