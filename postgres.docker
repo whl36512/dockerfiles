@@ -36,3 +36,19 @@ CMD ["/usr/sbin/init"]
 
 #for postgres 9.6
 #  su postgres -c '/usr/pgsql-9.6/bin/postgres -D /var/lib/pgsql/9.6/data' &
+
+#su postgres -c psql
+#postgres=# CREATE EXTENSION pgcrypto;
+#postgres=# CREATE EXTENSION  "uuid-ossp";
+
+
+
+#CREATE DATABASE <AMBARIDATABASE>;
+#CREATE USER <AMBARIUSER> WITH PASSWORD ‘<AMBARIPASSWORD>’;
+#GRANT ALL PRIVILEGES ON DATABASE <AMBARIDATABASE> TO <AMBARIUSER>;
+#\connect <AMBARIDATABASE>;
+#CREATE SCHEMA <AMBARISCHEMA> AUTHORIZATION <AMBARIUSER>;
+#ALTER SCHEMA <AMBARISCHEMA> OWNER TO <AMBARIUSER>;
+#ALTER ROLE <AMBARIUSER> SET search_path to ‘<AMBARISCHEMA>’, 'public';
+
+
