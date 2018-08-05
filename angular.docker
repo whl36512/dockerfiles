@@ -1,27 +1,21 @@
-FROM local/postgres
+FROM local/rustlang
 MAINTAINER "Weihan Lin" <hhl36512@gmail.com>
 ENV container docker
-
-RUN yum install -y git
-RUN git config --global user.email "whl36512@gmail.com"
-RUN git config --global user.name "whl36512"
 
 RUN curl --silent --location https://rpm.nodesource.com/setup_10.x |  bash - 
 RUN yum install -y nodejs
 RUN npm install -g @angular/cli
-
-EXPOSE 4200
-
 
 VOLUME [ "/sys/fs/cgroup" ]
 CMD ["/usr/sbin/init"]
 
 
 #docker build -f angular.docker --rm -t local/angular .
-#docker run --privileged --network=nw1 --ip=10.0.0.110 --name angu -p 2222:22 -p 5432:5432 -p 4200:4200 -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro local/postgres  # --privileged is requred by sshd and postgresql
+#docker run --privileged --network=nw1 --ip=10.0.0.110 --name angu1 -p 80:80 -p 2222:22 -p 5432:5432 -p 4200-4220:4200-4220 -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro local/angular  # --privileged is requred by sshd and postgresql
 #docker stop   angu ; docker rm   angu
 #docker rmi local/angular
 
+# To run angular
 #ng new ride2
 #cd ride2
 #ng serve --host 0.0.0.0 --disable-host-check

@@ -1,4 +1,4 @@
-FROM local/centos7-systemd
+FROM local/postgres
 MAINTAINER "Weihan Lin" <whl36512@gmail.com>
 ENV container docker
 
@@ -8,7 +8,6 @@ RUN yum remove -y vi; yum install -y vim; ln -s /usr/bin/vim /usr/bin/vi
 RUN curl -L https://copr.fedorainfracloud.org/coprs/mcepl/vim8/repo/epel-7/mcepl-vim8-epel-7.repo -o /etc/yum.repos.d/mcepl-vim8-epel-7.repo
 RUN yum update -y vim*
 # install git
-RUN yum install -y  git
 RUN yum install -y  gcc
 
 
@@ -19,7 +18,7 @@ RUN echo 'export PATH="$HOME/.cargo/bin:$PATH"'  >> /root/.bash_profile
 
 #docker build -f rustlang.docker --rm -t local/rustlang .
 #docker network create --driver bridge --subnet 10.0.0.0/16 nw1 
-#docker run --privileged --name centos7  --network=nw1 ip=10.0.0.2 -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro local/centos7-systemd  # --privileged is requred by sshd and postgresql
+#docker run --privileged --name rust1  --network=nw1 ip=10.0.0.2 -p 2222:22 -p 5432:5432 -p 4200-4220:4200-4220 -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro local/rustlang   # --privileged is requred by sshd and postgresql
 #docker stop   centos7
 #docker rm   centos7
 #docker rmi local/centos7-systemd
