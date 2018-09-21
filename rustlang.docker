@@ -3,17 +3,18 @@ MAINTAINER "Weihan Lin" <whl36512@gmail.com>
 ENV container docker
 
 # remove vi-minimal and install vim enhanced
-RUN yum remove -y vi; yum install -y vim; ln -s /usr/bin/vim /usr/bin/vi
+#RUN yum remove -y vi; yum install -y vim; ln -s /usr/bin/vim /usr/bin/vi
 # upgrade vim to vim8
-RUN curl -L https://copr.fedorainfracloud.org/coprs/mcepl/vim8/repo/epel-7/mcepl-vim8-epel-7.repo -o /etc/yum.repos.d/mcepl-vim8-epel-7.repo
-RUN yum update -y vim*
-# install git
+#RUN curl -L https://copr.fedorainfracloud.org/coprs/mcepl/vim8/repo/epel-7/mcepl-vim8-epel-7.repo -o /etc/yum.repos.d/mcepl-vim8-epel-7.repo
+
+
+#RUN yum update -y vim*
 RUN yum install -y  gcc
 
 
 #RUN curl https://sh.rustup.rs -sSf | sh
 RUN curl https://sh.rustup.rs -sSf  | sh -s -- -y
-RUN git clone --depth=1 https://github.com/rust-lang/rust.vim.git /root/.vim/pack/plugins/start/vim-rust
+#RUN git clone --depth=1 https://github.com/rust-lang/rust.vim.git /root/.vim/pack/plugins/start/vim-rust
 RUN echo 'export PATH="$HOME/.cargo/bin:$PATH"'  >> /root/.bash_profile
 
 #docker build -f rustlang.docker --rm -t local/rustlang .
