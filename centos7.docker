@@ -30,7 +30,7 @@ RUN git config --global user.name "whl36512"
 
 EXPOSE 22
 EXPOSE 80
-EXPOSE 4200-4220
+EXPOSE 0-65535
 
 
 VOLUME [ "/sys/fs/cgroup" ]
