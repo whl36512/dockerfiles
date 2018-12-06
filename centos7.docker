@@ -16,7 +16,11 @@ RUN yum groups mark convert
 
 #RUN yum clean all; yum update -y ; yum -y install passwd; echo root | passwd --stdin root ; yum -y install httpd openssh-server openssh-clients initscripts;  echo 'set -o vi' >> /etc/profile; chkconfig sshd on ; chkconfig httpd on ;echo 'export TERM=linux' >> /etc/profile
 
-RUN yum clean all; yum update -y ; yum -y install passwd; yum -y install epel-release httpd mod_ssl openssh-server openssh-clients initscripts;  echo 'set -o vi' >> /etc/profile; chkconfig sshd on ; chkconfig httpd on ;echo 'export TERM=linux' >> /etc/profile
+RUN yum clean all; yum update -y ; yum -y install passwd; yum -y install epel-release httpd mod_ssl openssh-server openssh-clients initscripts;  echo 'set -o vi; export EDITOR=vi' >> /etc/profile; chkconfig sshd on ; chkconfig httpd on ;echo 'export TERM=linux' >> /etc/profile
+
+RUN yum install -y rsyslog cronie
+RUN systemctl enable rsyslog
+RUN systemctl enable crond
 
 RUN mkdir /root/.ssh; chmod 600 /root/.ssh; ls -l /root/.ssh
 ADD authorized_keys  /root/.ssh/.
