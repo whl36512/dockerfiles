@@ -34,7 +34,8 @@ CMD ["/usr/sbin/init"]
 
 #Once inside, run the following to setup database
 #  $(find /usr -name postgresql*setup) initdb
-#  cat /root/pg_hba.conf >> $(find /var -name pg_hba.conf)
+#  cat /root/pg_hba.conf  $(find /var -name pg_hba.conf) > /tmp/pg_hba.conf
+#  cat /tmp/pg_hba.conf > $(find /var -name pg_hba.conf)
 #  echo "listen_addresses = '*'    # listen on all interfaces" >> $(find /var -name postgresql.conf)
 
 #for postgres 11
