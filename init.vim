@@ -1,5 +1,10 @@
 " ~/.config/nvim/init.vim
 
+" install neovim
+" yum install -y neovim python3-neovim
+" install plug.vim plugin manager
+" curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
 call plug#begin()
 Plug 'preservim/nerdtree'
 " Plug 'easymotion/vim-easymotion'
