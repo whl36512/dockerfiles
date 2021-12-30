@@ -18,10 +18,10 @@ RUN yum install -y httpd mod_ssl openssh-server openssh-clients initscripts sudo
 # at host shell, do 
 # ssh-copy-id localhost
 # to generate authorized_keys
+# and do
+# cp -r ~/.ssh ssh
 WORKDIR /root/.ssh
-#ADD --chmod=600 ssh/authorized_keys ssh/id_ed25519  ./
 ADD --chmod=600 ssh/*  ./
-#RUN chmod 600 id_ed25519
 
 #FROM baseos AS base_git
 
@@ -42,14 +42,13 @@ RUN conda install -c conda-forge ansible
 #FROM scratch
 #COPY --from=base_ansible / /
 
-
 EXPOSE 22
 EXPOSE 80
 
 VOLUME [ "/sys/fs/cgroup" ]
 CMD ["/usr/sbin/init"]
 
-
+# ------------------------------------------------------------------
 #DOCKER_BUILDKIT=1 docker build -f r8-basic.dockerfile --rm -t local/r8-basic . 
 #docker run --privileged --name r8   -p 10080:80 -p 10022:22 -p 10443:443 -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro                         local/r8-basic
 #docker run --privileged --name r8   -p 10080:80 -p 10022:22 -p 10443:443 -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v ~/repo:/mnt/repo:ro  local/r8-basic
