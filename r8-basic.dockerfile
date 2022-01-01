@@ -46,7 +46,9 @@ EXPOSE 22
 EXPOSE 80
 
 VOLUME [ "/sys/fs/cgroup" ]
-CMD ["/usr/sbin/init"]
+# ENTRYPOINT will always run. CMD will be appended to ENTRYPOINT. CMD can be replaced by command line parameter when 'docker run'
+ENTRYPOINT /usr/sbin/init
+#CMD ["/usr/sbin/init"]
 
 # ------------------------------------------------------------------
 #DOCKER_BUILDKIT=1 docker build -f r8-basic.dockerfile --rm -t local/r8-basic . 
