@@ -56,11 +56,20 @@ ENTRYPOINT /usr/sbin/init
 
 # ------------------------------------------------------------------
 #DOCKER_BUILDKIT=1 docker build -f r8-basic.dockerfile --rm -t local/r8-basic . 
+# bridged netwok so the container can be ssh-ed from host
 # docker network create --driver bridge --subnet 10.0.0.0/16 nw1 
 # docker run --privileged --name r8  --network=nw1  --ip=10.0.0.2  -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v ~/repo:/mnt/repo:ro  local/r8-basic
 # ssh -o StrictHostKeyChecking=no root@10.0.0.2
 # docker network disconnect nw1 r8
 # docker network connect nw1 r8
+#
+#
+# macVlan so the container can be ssh-ed from other hosts
+# parent must be host's interface
+# subnet and gateway must be the same as host's interface
+# docker network create -d macvlan --subnet=10.244.17.0/24 --gateway=10.244.17.251 -o parent=bond0.417 nw2 
+# docker run --privileged --name r8  --network=nw2 -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v ~/repo:/mnt/repo:ro  local/r8-basic
+#
 #
 # docker run --privileged --name r8   -p 10080:80 -p 10022:22 -p 10443:443 -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro                         local/r8-basic
 # docker run --privileged --name r8   -p 10080:80 -p 10022:22 -p 10443:443 -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v ~/repo:/mnt/repo:ro  local/r8-basic
