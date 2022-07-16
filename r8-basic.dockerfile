@@ -15,6 +15,10 @@ RUN yum install -y httpd mod_ssl openssh-server openssh-clients initscripts sudo
     mkdir /root/.ssh; chmod 600 /root/.ssh; ls -l /root/.ssh ; \
     mkdir /mnt/repo ; chmod 777 /mnt/repo
 
+# install gcc, etc
+RUN yum group install -y "Development Tools"
+
+
 # at host shell, do 
 # ssh-copy-id localhost
 # to generate authorized_keys
