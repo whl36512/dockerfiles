@@ -67,6 +67,7 @@ ENTRYPOINT /usr/sbin/init
 # macVlan so the container can be ssh-ed from other hosts
 # parent must be host's interface
 # subnet and gateway must be the same as host's interface
+# use 'ip r' to find default gateway and 'ip a' to find subnet
 # docker network create -d macvlan --subnet=10.244.17.0/24 --gateway=10.244.17.251 -o parent=bond0.417 nw2 
 # docker run --privileged --name r8  --network=nw2 -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v ~/repo:/mnt/repo:ro  local/r8-basic
 #
