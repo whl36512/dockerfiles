@@ -56,12 +56,14 @@ ENTRYPOINT /usr/sbin/init
 
 # ------------------------------------------------------------------
 #DOCKER_BUILDKIT=1 docker build -f r8-basic.dockerfile --rm -t local/r8-basic . 
-#docker run --privileged --name r8   -p 10080:80 -p 10022:22 -p 10443:443 -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro                         local/r8-basic
-#docker run --privileged --name r8   -p 10080:80 -p 10022:22 -p 10443:443 -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v ~/repo:/mnt/repo:ro  local/r8-basic
-#ssh -o StrictHostKeyChecking=no -p 10022 root@localhost
-#docker stop   r8
-#docker rm   r8
-#docker rmi local/r8-basic
+# docker network create --driver bridge --subnet 10.0.0.0/16 nw1 
+# docker run --privileged --name r8  --network=nw1  --ip=10.0.0.2  -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v ~/repo:/mnt/repo:ro  local/r8-basic
+# docker run --privileged --name r8   -p 10080:80 -p 10022:22 -p 10443:443 -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro                         local/r8-basic
+# docker run --privileged --name r8   -p 10080:80 -p 10022:22 -p 10443:443 -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v ~/repo:/mnt/repo:ro  local/r8-basic
+# ssh -o StrictHostKeyChecking=no -p 10022 root@localhost
+# docker stop   r8
+# docker rm   r8
+# docker rmi local/r8-basic
 
 #Once the container is running, login as root into the container and run the following commands to finish installation
 # ssh -o StrictHostKeyChecking=no -p 2222 root@localhost    # because of MacOS's limitation you cannot ssh using containers port 22. You must use '-p 2222'
