@@ -7,7 +7,7 @@ ENV container docker
 
 RUN yum clean all; yum update -y ; \
     yum install -y epel-release  
-RUN yum install -y httpd mod_ssl openssh-server openssh-clients initscripts sudo  passwd rsyslog cronie netcat which procps net-tools iproute sysstat libmemcached ; \
+RUN yum install -y httpd mod_ssl openssh-server openssh-clients initscripts sudo  passwd rsyslog cronie netcat which procps net-tools iproute sysstat libmemcached screen; \
     echo 'set -o vi; export EDITOR=vi' >> /etc/profile; \
     echo 'export TERM=linux' >> /etc/profile ; \
     chkconfig sshd on ; chkconfig httpd on ; \
@@ -16,7 +16,7 @@ RUN yum install -y httpd mod_ssl openssh-server openssh-clients initscripts sudo
     mkdir /mnt/repo ; chmod 777 /mnt/repo
 
 # install gcc, etc
-RUN yum group install -y "Development Tools"
+RUN yum group install -y "Development Tools" 
 
 
 # at host shell, do 
