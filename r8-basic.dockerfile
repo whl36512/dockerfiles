@@ -56,15 +56,29 @@ ENTRYPOINT /usr/sbin/init
 
 # ------------------------------------------------------------------
 #DOCKER_BUILDKIT=1 docker build -f r8-basic.dockerfile --rm -t local/r8-basic . 
+# use docker's default bridge network 
+# the container cannot be pinged from other hosts
+# the container can ping outside world
+# to ssh to the container from other hosts, 22 must be mapped 
+# docker run --privileged --name r8  --network=bridge  -p10022:22 -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v ~/repo:/mnt/repo:ro  local/r8-basic
+# ssh -o StrictHostKeyChecking=no -p 10022 root@this_host
+#
 # bridged netwok so the container can be ssh-ed from host
+# the container cannot be pinged from other hosts
+# the container can ping outside world
 # docker network create --driver bridge --subnet 10.0.0.0/16 nw1 
-# docker run --privileged --name r8  --network=nw1  --ip=10.0.0.2  -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v ~/repo:/mnt/repo:ro  local/r8-basic
-# ssh -o StrictHostKeyChecking=no root@10.0.0.2
-# docker network disconnect nw1 r8
+# to ssh to the container from other hosts, 22 must be mapped 
+# docker run --privileged --name r8  --network=nw1  --ip=10.0.0.2 -p10022:22  -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v ~/repo:/mnt/repo:ro  local/r8-basic
+# docker run --privileged --name r8  --network=none   -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v ~/repo:/mnt/repo:ro  local/r8-basic
 # docker network connect nw1 r8
+# docker network disconnect nw1 r8
+# ssh -o StrictHostKeyChecking=no -p 10022 root@this_host
 #
 #
 # macVlan so the container can be ssh-ed from other hosts
+# the container cannot be pinged from host. but can be pinged from other hosts
+# the container cannot ping host. but the containercan ping from other hosts
+# the container cannot ping outside world
 # parent must be host's interface
 # subnet and gateway must be the same as host's interface
 # use 'ip r' to find default gateway and 'ip a' to find subnet
