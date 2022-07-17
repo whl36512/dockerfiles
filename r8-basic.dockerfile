@@ -60,7 +60,7 @@ ENTRYPOINT /usr/sbin/init
 # the container cannot be pinged from other hosts
 # the container can ping outside world
 # to ssh to the container from other hosts, 22 must be mapped 
-# docker run --privileged --name r8  --network=bridge  -p10022:22 -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v ~/repo:/mnt/repo:ro  local/r8-basic
+# docker run --privileged --name r8 --hostname r8beefy  --network=bridge  -p10022:22 -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v ~/repo:/mnt/repo:ro  local/r8-basic
 # ssh -o StrictHostKeyChecking=no -p 10022 root@this_host
 #
 # bridged netwok so the container can be ssh-ed from host
