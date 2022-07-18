@@ -42,6 +42,7 @@ RUN curl https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -
 ENV PATH=$CONDA_DIR/bin:$PATH
 
 RUN conda install -c conda-forge ansible 
+RUN conda update -c conda-forge jinja2  # must update jinja2 for ansible to work
 
 #FROM scratch
 #COPY --from=base_ansible / /
