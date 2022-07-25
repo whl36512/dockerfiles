@@ -1,4 +1,4 @@
-FROM local/r8-systemd  AS baseos
+FROM local/rocky-systemd  AS baseos
 ENV container docker
 
 #RUN yum groups mark convert

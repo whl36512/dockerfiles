@@ -1,9 +1,9 @@
-#docker build -f r8-systemd.dockerfile --rm -t local/r8-systemd .
-#docker run --privileged --name r8   -p 10080:80 -p 10022:22 -p 10443:443 -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v ~/repo:/mnt/repo:ro  local/r8-systemd
+#docker build -f rocky-systemd.dockerfile --rm -t local/r8-systemd .
+#docker run --privileged --name r8   -p 10080:80 -p 10022:22 -p 10443:443 -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v ~/repo:/mnt/repo:ro  local/rocky-systemd
 
 
 
-FROM rockylinux/rockylinux:8
+FROM rockylinux/rockylinux:9
 ENV container docker
 RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == \
 systemd-tmpfiles-setup.service ] || rm -f $i; done); \
