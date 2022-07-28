@@ -17,6 +17,7 @@ RUN yum install -y httpd mod_ssl openssh-server openssh-clients initscripts sudo
 
 # install gcc, etc
 RUN yum group install -y "Development Tools" 
+RUN dnf install -y glibc-langpack-en; localectl set-locale LANG=en_US.UTF-8. # get rid of message 'Failed to set locale, defaulting to C.UTF-8'
 
 
 # at host shell, do 
