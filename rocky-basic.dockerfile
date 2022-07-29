@@ -17,7 +17,8 @@ RUN yum install -y httpd mod_ssl openssh-server openssh-clients initscripts sudo
 
 # install gcc, etc
 RUN yum group install -y "Development Tools" 
-RUN dnf install -y glibc-langpack-en; localectl set-locale LANG=en_US.UTF-8. # get rid of message 'Failed to set locale, defaulting to C.UTF-8'
+# get rid of message 'Failed to set locale, defaulting to C.UTF-8'. Manually run localectl set-locale LANG=en_US.UTF-8 after login
+RUN dnf install -y glibc-langpack-en
 
 
 # at host shell, do 
@@ -61,6 +62,7 @@ ENTRYPOINT /usr/sbin/init
 # use docker's default bridge network 
 # the container cannot be pinged from other hosts
 # the container can ping outside world
+# cannot set ip address
 # to ssh to the container from other hosts, 22 must be mapped 
 # docker run --privileged --name r8 --hostname r8beefy  --network=bridge  -p10022:22 -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v ~/repo:/mnt/repo:ro  local/r8-basic
 # ssh -o StrictHostKeyChecking=no -p 10022 root@this_host
