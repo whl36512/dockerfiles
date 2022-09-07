@@ -58,7 +58,7 @@ ENTRYPOINT /usr/sbin/init
 #CMD ["/usr/sbin/init"]
 
 # ------------------------------------------------------------------
-#DOCKER_BUILDKIT=1 docker build -f r8-basic.dockerfile --rm -t local/r8-basic . 
+#DOCKER_BUILDKIT=1 docker build -f rocky--basic.dockerfile --rm -t local/r8-basic . 
 # use docker's default bridge network 
 # the container cannot be pinged from other hosts
 # the container can ping outside world
