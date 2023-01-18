@@ -1,4 +1,4 @@
-FROM local/r8-systemd  AS baseos
+FROM local/r9-systemd  AS baseos
 ENV container docker
 
 #RUN yum groups mark convert
@@ -46,11 +46,6 @@ ENV PATH=$CONDA_DIR/bin:$PATH
 RUN conda install -c conda-forge ansible 
 RUN conda update -c conda-forge jinja2  # must update jinja2 for ansible to work
 
-RUN yum install -y yum-utils
-RUN yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
-RUN yum -y install vault
-
-
 #FROM scratch
 #COPY --from=base_ansible / /
 
@@ -63,7 +58,7 @@ ENTRYPOINT /usr/sbin/init
 #CMD ["/usr/sbin/init"]
 
 # ------------------------------------------------------------------
-#DOCKER_BUILDKIT=1 docker build -f rocky-basic.dockerfile --rm -t local/r8-basic . 
+#DOCKER_BUILDKIT=1 docker build -f r9-basic.dockerfile --rm -t local/r9-basic . 
 # use docker's default bridge network 
 # the container cannot be pinged from other hosts
 # the container can ping outside world
