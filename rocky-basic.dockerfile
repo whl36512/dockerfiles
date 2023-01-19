@@ -77,6 +77,10 @@ ENTRYPOINT /usr/sbin/init
 # the container can ping outside world
 # docker network create --driver bridge --subnet 10.0.0.0/16 nw1 
 # to ssh to the container from other hosts, 22 must be mapped 
+#
+# docker create --storage-opt size=50G  --privileged --name r8  --network=nw1  --ip=10.0.0.2 -p10022:22   -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /data/user/wlin:/root/data:rw  local/r8-basic
+# docker start r8
+# 
 # docker run --privileged --name r8  --network=nw1  --ip=10.0.0.2 -p10022:22  -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v ~/repo:/mnt/repo:ro  local/r8-basic
 # docker run --privileged --name r8  --network=none   -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v ~/repo:/mnt/repo:ro  local/r8-basic
 # docker network connect nw1 r8
