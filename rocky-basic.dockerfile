@@ -46,13 +46,32 @@ ENV PATH=$CONDA_DIR/bin:$PATH
 RUN conda install -c conda-forge ansible 
 RUN conda update -c conda-forge jinja2  # must update jinja2 for ansible to work
 
-RUN yum install -y yum-utils
-RUN yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
-RUN yum -y install vault
+#RUN yum install -y yum-utils
+#RUN yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+#RUN yum -y install vault
+
+RUN echo 'set -o vi' >> /etc/bashrc
+RUN echo 'export JAVA_HOME=/usr/lib/jvm/zulu8' >> /etc/bashrc
+RUN echo 'export GRADLE_USER_HOME=~/.gradle' >> /etc/bashrc
+RUN echo 'export PATH=/opt/conda/bin:/mnt/c/weihan/dl/flink-1.9.3/bin:/usr/local/bin:$PATH' >> /etc/bashrc
+#RUN echo 'export KUBECONFIG=/etc/kube/config/admin.conf.from.bigkum201v.prd.chi.accertify.net.20220708' >> /etc/bashrc
+RUN echo 'export KUBECONFIG=/mnt/c/weihan/config/kube/admin.conf.from.bigkum201v.prd.chi.accertify.net.20220708' >> /etc/bashrc
+RUN echo 'export HISTSIZE=100000' >> /etc/bashrc
+
+RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl";  install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl ; rm kubectl
+RUN curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+#RUN adduser -u 1162600547 wlin ; usermod -u 1162600547 wlin ; groupmod -g 1162600547 wlin ; cp -rf /root/.ssh ~wlin/. ; chown -R wlin:wlin ~wlin ; chmod 700 ~wlin/.ssh   # these commands cause build to stuck at exporting layers.  Run these commands after login as root to the container
+
+
+# a ansible play book will install the following files
+#ADD --chmod=644 files/gradle.properties ~/.gradle/.
+#ADD --chmod=644 files/gitignore ~/.gitignore
+#ADD --chmod=644 files/gitconfig ~/.gitconfig
 
 
 #FROM scratch
-#COPY --from=base_ansible / /
+#COPY --from=baseos / /
 
 EXPOSE 22
 EXPOSE 80
@@ -69,20 +88,21 @@ ENTRYPOINT /usr/sbin/init
 # the container can ping outside world
 # cannot set ip address
 # to ssh to the container from other hosts, 22 must be mapped 
-# docker run --privileged --name r8 --hostname r8beefy  --network=bridge  -p10022:22 -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v ~/repo:/mnt/repo:ro  local/r8-basic
+# docker run --privileged --rm --name r8 --hostname r8  --network=bridge  -p10022:22 -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v ~/repo:/mnt/repo:ro  local/r8-basic
+# docker run --privileged --rm --name r8 --hostname r8  --network=bridge  -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /mnt/c/:/mnt/c:rw  local/r8-basic
 # ssh -o StrictHostKeyChecking=no -p 10022 root@this_host
 #
 # bridged netwok so the container can be ssh-ed from host
 # the container cannot be pinged from other hosts
 # the container can ping outside world
-# docker network create --driver bridge --subnet 10.0.0.0/16 nw1 
+# docker network create --driver bridge --subnet 10.0.0.0/16 mybridge1 
 # to ssh to the container from other hosts, 22 must be mapped 
 #
-# docker create --storage-opt size=50G  --privileged --name r8  --network=nw1  --ip=10.0.0.2 -p10022:22   -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /data/user/wlin:/root/data:rw  local/r8-basic
+# docker create --storage-opt size=50G  --privileged --name r8  --network=nw1  --ip=10.0.0.2 -p10022:22   -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /data/user/wlin:/root/data:rw  local/r8-basic # storage-opt only works with 'create'
 # docker start r8
 # 
-# docker run --privileged --name r8  --network=nw1  --ip=10.0.0.2 -p10022:22  -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v ~/repo:/mnt/repo:ro  local/r8-basic
-# docker run --privileged --name r8  --network=none   -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v ~/repo:/mnt/repo:ro  local/r8-basic
+# docker run --privileged --rm --name r8 --hostname r8  --network=mybridge1  --ip=10.0.0.2 -p10022:22  -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /mnt/c:/mnt/c:rw  local/r8-basic
+# docker run --privileged --rm --name r8  --network=none   -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v ~/repo:/mnt/repo:ro  local/r8-basic
 # docker network connect nw1 r8
 # docker network disconnect nw1 r8
 # ssh -o StrictHostKeyChecking=no -p 10022 root@this_host
