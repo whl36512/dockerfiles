@@ -3,6 +3,8 @@ ENV container docker
 
 #RUN yum groups mark convert
 
+RUN echo 'sslverify=false' >> /etc/yum.conf
+
 #RUN yum clean all; yum update -y ; yum -y install passwd; echo root | passwd --stdin root ; yum -y install httpd openssh-server openssh-clients initscripts;  echo 'set -o vi' >> /etc/profile; chkconfig sshd on ; chkconfig httpd on ;echo 'export TERM=linux' >> /etc/profile 
 
 RUN yum clean all; yum update -y ; \
