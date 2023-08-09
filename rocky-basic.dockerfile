@@ -63,7 +63,18 @@ RUN echo 'export HISTSIZE=100000' >> /etc/bashrc
 RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl";  install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl ; rm kubectl
 RUN curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
-#RUN adduser -u 1162600547 wlin ; usermod -u 1162600547 wlin ; groupmod -g 1162600547 wlin ; cp -rf /root/.ssh ~wlin/. ; chown -R wlin:wlin ~wlin ; chmod 700 ~wlin/.ssh   # these commands cause build to stuck at exporting layers.  Run these commands after login as root to the container
+# install docker to run docker in docker
+RUN yum install -y yum-utils
+RUN yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+RUN yum install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+#RUN yum install -y wget
+# curl downloaded 0 size file. wget works
+#RUN wget https://github.com/stern/stern/releases/download/v1.25.0/stern_1.25.0_linux_amd64.tar.gz
+#RUN tar  -xvf stern_1.25.0_linux_amd64.tar.gz
+
+# these commands cause build to stuck at exporting layers.  Run these commands after login as root to the container
+#RUN groupadd -g 1162600547 wlin ; adduser -u 1162600547 -g 1162600547 wlin ; usermod -u 1162600547 wlin ; groupmod -g 1162600547 wlin ; cp -rf /root/.ssh ~wlin/. ; chown -R wlin:wlin ~wlin ; chmod -R 700 ~wlin/.ssh   \
 
 
 # a ansible play book will install the following files
@@ -104,6 +115,8 @@ ENTRYPOINT /usr/sbin/init
 # docker start r8
 # 
 # docker run --privileged --rm --name r8 --hostname r8  --network=mybridge1  --ip=10.0.0.2 -p10022:22  -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /mnt/c:/mnt/c:rw  local/r8-basic
+# enable docker in docker
+# docker run --privileged --rm --name r8 --hostname r8  --network=mybridge1  --ip=10.0.0.2 -p10022:22  -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /var/run/docker.sock:/var/run/docker.sock -v /mnt/c:/mnt/c:rw  local/r8-basic
 # docker run --privileged --rm --name r8  --network=none   -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v ~/repo:/mnt/repo:ro  local/r8-basic
 # docker network connect nw1 r8
 # docker network disconnect nw1 r8
