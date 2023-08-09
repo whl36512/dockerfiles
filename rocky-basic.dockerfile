@@ -143,5 +143,14 @@ ENTRYPOINT /usr/sbin/init
 
 #Once the container is running, login as root into the container and run the following commands to finish installation
 # ssh -o StrictHostKeyChecking=no -p 2222 root@localhost    # because of MacOS's limitation you cannot ssh using containers port 22. You must use '-p 2222'
+# Once inside the container
+# groupadd -g 1162600547 wlin ; adduser -u 1162600547 -g 1162600547 wlin ; usermod -u 1162600547 wlin ; groupmod -g 1162600547 wlin ; cp -rf /root/.ssh ~wlin/. ; chown -R wlin:wlin ~wlin ; chmod -R 700 ~wlin/.ssh   \
+# /mnt/c/weihan/config/config-root.sh
+# /mnt/c/weihan/config/config.sh
+# systemctl start docker
 # cd /myrepo/mapr-config ; ansible-playbook install_Zulu_JDK_8.yaml -i ./hosts
 # cd /myrepo/mapr-config ; ansible-playbook install_dev_edge.yaml   -i ./hosts
+# su - wlin
+# /mnt/c/weihan/config/config.sh
+
+
