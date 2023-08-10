@@ -144,13 +144,24 @@ ENTRYPOINT /usr/sbin/init
 #Once the container is running, login as root into the container and run the following commands to finish installation
 # ssh -o StrictHostKeyChecking=no -p 2222 root@localhost    # because of MacOS's limitation you cannot ssh using containers port 22. You must use '-p 2222'
 # Once inside the container
+# #!/bin/bash
+# 
+# set -x
+# 
 # groupadd -g 1162600547 wlin ; adduser -u 1162600547 -g 1162600547 wlin ; usermod -u 1162600547 wlin ; groupmod -g 1162600547 wlin ; cp -rf /root/.ssh ~wlin/. ; chown -R wlin:wlin ~wlin ; chmod -R 700 ~wlin/.ssh
 # /mnt/c/weihan/config/config-root.sh
-# /mnt/c/weihan/config/config.sh
 # systemctl start docker
-# cd /myrepo/mapr-config ; ansible-playbook install_Zulu_JDK_8.yaml -i ./hosts
-# cd /myrepo/mapr-config ; ansible-playbook install_dev_edge.yaml   -i ./hosts
-# su - wlin
+# systemctl reload docker
 # /mnt/c/weihan/config/config.sh
+# 
+# cd /mnt/c/weihan/repo/mapr-config ; ansible-playbook install_Zulu_JDK_8.yaml -i ./hosts
+# cd /mnt/c/weihan/repo/mapr-config ; ansible-playbook install_dev_edge.yaml   -i ./hosts
+# 
+# cp /mnt/c/weihan/config/ssl_truststores/ssl_truststore.maprdemo.prod02.prod03.prod04.qa01.prod05 /opt/mapr/conf/ssl_truststore
+# cp /mnt/c/weihan/config/mapr-clusters.conf /opt/mapr/conf/
+# 
+# chmod 666 /var/run/docker.sock
+# 
+# su - wlin -c /mnt/c/weihan/config/config.sh
 
 
