@@ -45,7 +45,7 @@ ENV CONDA_DIR /opt/conda
 RUN curl https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh --output ~/miniconda.sh && /bin/bash ~/miniconda.sh -b -p /opt/conda ; /opt/conda/bin/conda init
 ENV PATH=$CONDA_DIR/bin:$PATH
 
-RUN conda install -c conda-forge ansible 
+RUN conda install -c conda-forge ansible=9.5.1
 RUN conda update -c conda-forge jinja2  # must update jinja2 for ansible to work
 
 #RUN yum install -y yum-utils
